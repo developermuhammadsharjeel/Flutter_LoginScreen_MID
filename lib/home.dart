@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screen2.dart';
 
+
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyApp(),
@@ -14,7 +15,24 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _rememberMe = false;
+
+  void _login() {
+
+    if (_emailController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginForm()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter email and password')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +78,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   SizedBox(height: 5),
                   TextField(
+                    controller: _emailController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -73,6 +92,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   SizedBox(height: 5),
                   TextField(
+                    controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -109,7 +129,7 @@ class _MyAppState extends State<MyApp> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: _login,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.pink,
                         padding: EdgeInsets.symmetric(vertical: 15),
@@ -183,3 +203,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
